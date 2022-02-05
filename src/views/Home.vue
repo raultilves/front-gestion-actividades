@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-1 p-0">
+        <div class="col-2 p-0">
           <SideBar />
         </div>
         <div class="col">

@@ -4,9 +4,9 @@
     <div class="container mt-5">
       <p class="display-1">Bienvenido {{ usuario }}</p>
 
-      <div v-for="item in actividades" :key="item._id">
-        {{ item.titulo }}
-      </div>
+      <p v-if="actividades.length > 1">Tienes {{actividades.length}} actividades</p>
+      <p v-else-if="actividades.length == 1">Tienes {{actividades.length}} actividad</p>
+      <p v-else>No tienes actividades aún</p>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
       usuario: "",
       modulos: [],
       actividades: [],
+      entregas: []
     };
   },
   components: {
@@ -59,7 +60,7 @@ export default {
 
         axios.post("http://localhost:3000/api/actividades/find",
           {
-            modulo_id: modulo._id,
+            modulo_id: modulo.data._id,
           },
           {
             headers: {
@@ -70,6 +71,10 @@ export default {
           this.actividades = res.data
         });
       });
+    } else if(rol == 'profesor') {
+      this.$router.push('actividades')
+    } else {
+      this.$router.push('login')
     }
   },
 };

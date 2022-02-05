@@ -2,10 +2,7 @@
   <div class="container">
     <div class="postion-relative">
       <div class="position-absolute top-50 start-50 translate-middle">
-        <div class="mx-auto mb-5" style="width:200px">
-            <h1>Bienvenido</h1>
-        </div>
-        <div class="border p-5 rounded-3 bg-dark">
+        <div class="border p-5 rounded-3 bg-dark" style="width: 400px; height: 300px">
           <form @submit.prevent="handleSubmit">
             <div class="mb-3">
               <input
@@ -19,7 +16,7 @@
             </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Contraseña"
@@ -28,7 +25,7 @@
               />
             </div>
 
-            <div class="d-grid">
+            <div class="d-grid fixed-bottom m-5">
               <button class="btn btn-primary">Enviar</button>
             </div>
           </form>

@@ -2,7 +2,10 @@
   <div class="container">
     <div class="postion-relative">
       <div class="position-absolute top-50 start-50 translate-middle">
-        <div class="border p-5 rounded-3 bg-dark" style="width: 400px; height: 300px">
+        <div
+          class="border p-5 rounded-3 bg-dark"
+          style="width: 400px; height: 300px"
+        >
           <form @submit.prevent="handleSubmit">
             <div class="mb-3">
               <input
@@ -36,37 +39,43 @@
 </template>
 
 <script>
-import axios from "axios"
-import VueJwtDecode from 'vue-jwt-decode'
+import {mapMutations} from 'vuex'
+import axios from "axios";
+import VueJwtDecode from "vue-jwt-decode";
 export default {
-    name: 'Login',
-    data() {
-        return {
-            username: "",
-            password: ""
-        }
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapMutations(['logIn']),
+    async handleSubmit() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/user/login",
+          {
+            username: this.username,
+            password: this.password,
+          }
+        );
+
+        const jwtDecoded = await VueJwtDecode.decode(response.data.token);
+
+        localStorage.setItem("auth-token", response.data.token);
+        localStorage.setItem("rol", jwtDecoded.rol);
+        localStorage.setItem("_id", jwtDecoded._id);
+        localStorage.setItem("username", jwtDecoded.username);
+
+        this.logIn()
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
     },
-    methods: {
-        async handleSubmit() {
-            try {
-                const response = await axios.post('http://localhost:3000/api/user/login', {
-                username: this.username,
-                password: this.password
-            })
-
-            const jwtDecoded = await VueJwtDecode.decode(response.data.token)
-
-            localStorage.setItem('auth-token', response.data.token)
-            localStorage.setItem('rol', jwtDecoded.rol)
-            localStorage.setItem('_id', jwtDecoded._id)
-            localStorage.setItem('username', jwtDecoded.username)
-
-            this.$router.push('actividades')
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }
+  },
 };
 </script>
 

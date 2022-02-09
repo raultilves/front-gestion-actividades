@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['logIn']),
+    ...mapMutations(['logIn', 'setRol', 'setUserId', 'setToken', 'setUsername']),
     async handleSubmit() {
       try {
         const response = await axios.post(
@@ -64,15 +64,14 @@ export default {
 
         const jwtDecoded = await VueJwtDecode.decode(response.data.token);
 
-        localStorage.setItem("auth-token", response.data.token);
-        localStorage.setItem("rol", jwtDecoded.rol);
-        localStorage.setItem("_id", jwtDecoded._id);
-        localStorage.setItem("username", jwtDecoded.username);
-
         this.logIn()
+        this.setToken(response.data.token)
+        this.setRol(jwtDecoded.rol)
+        this.setUserId(jwtDecoded._id)
+        this.setUsername(jwtDecoded.username)
         this.$router.push("/");
       } catch (error) {
-        console.log(error);
+        this.$router.push("/login");
       }
     },
   },

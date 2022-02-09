@@ -1,10 +1,10 @@
 <template>
   <div>
-    <p class="display-1">Bienvenido {{ usuario }}</p>
+    <p class="display-1">Bienvenido {{ username }}</p>
 
     <p v-if="actividades.length > 1">
       Tienes {{ actividades.length }} actividades. Tienes pendiente:
-      {{ actividades.lenght - entregas.length }}
+      {{ actividades.length - entregas.length }}
     </p>
     <p v-else-if="actividades.length == 1 && entregas.length == 1">
       Tienes {{ actividades.length }} actividad y estás al dia
@@ -25,7 +25,7 @@
               Echa un vistazo rápido a la lista de actividades propuestas en tus
               módulos. Esto mostrará tanto entregadas como pendientes.
             </p>
-            <a href="#" class="btn btn-primary">Ver más</a>
+            <router-link to="/actividades-alumno" class="btn btn-primary">Ver más</router-link>
           </div>
         </div>
       </div>
@@ -58,93 +58,85 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 
 export default {
   name: "HomeAlumno",
   data() {
     return {
-      usuario: "",
-      userId: "",
       modulos: [],
       actividades: [],
       entregas: [],
     };
   },
+  computed: {
+    ...mapState(["username", "userId", "token"]),
+  },
   methods: {
     async totalActividades() {
-      const usuario = localStorage.getItem("username");
-      const userId = localStorage.getItem("_id");
+      try {
+        const matriculas = await axios.get(
+          `http://localhost:3000/api/matriculas/byalumno/${this.userId}`,
+          {
+            headers: {
+              "auth-token": this.token,
+            },
+          }
+        );
 
-      if (usuario) {
-        this.usuario = usuario;
-        this.userId = userId;
-        
-        try {
-          const matriculas = await axios.get(
-            `http://localhost:3000/api/matriculas/byalumno/${userId}`,
+        matriculas.data.forEach(async (matricula) => {
+          const modulo = await axios.get(
+            `http://localhost:3000/api/modulos/${matricula.modulo_id}`,
             {
               headers: {
-                "auth-token": localStorage.getItem("auth-token"),
+                "auth-token": this.token,
               },
             }
           );
+          this.modulos.push(modulo.data);
 
-          matriculas.data.forEach(async (matricula) => {
-            const modulo = await axios.get(
-              `http://localhost:3000/api/modulos/${matricula.modulo_id}`,
+          const actividades = await axios
+            .post(
+              "http://localhost:3000/api/actividades/find",
+              {
+                modulo_id: modulo.data._id,
+              },
               {
                 headers: {
-                  "auth-token": localStorage.getItem("auth-token"),
+                  "auth-token": this.token,
                 },
               }
-            );
-            this.modulos.push(modulo.data);
-
-            axios
-              .post(
-                "http://localhost:3000/api/actividades/find",
-                {
-                  modulo_id: modulo.data._id,
-                },
-                {
-                  headers: {
-                    "auth-token": localStorage.getItem("auth-token"),
-                  },
-                }
-              )
-              .then((res) => {
-                this.actividades = res.data;
-              });
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        this.$router.push("login");
+            )
+            
+            actividades.data.forEach(actividad => {
+              this.actividades.push(actividad)
+            })
+        });
+        console.log(this.modulos)
+      } catch (err) {
+        console.log(err);
       }
     },
     async totalEntregas() {
-      if (this.usuario && this.rol == "alumno") {
-        try {
-          const entregas = await axios.get(
-            `http://localhost:3000/api/entregas/byalumno/${this.userId}`,
-            {
-              headers: {
-                "auth-token": localStorage.getItem("auth-token"),
-              },
-            }
-          );
+      try {
+        const entregas = await axios.get(
+          `http://localhost:3000/api/entregas/byalumno/${this.userId}`,
+          {
+            headers: {
+              "auth-token": this.token,
+            },
+          }
+        );
 
-          if (entregas) this.entregas = entregas.data;
-        } catch (err) {
-          console.log(err);
-        }
+        if (entregas) this.entregas = entregas.data;
+      } catch (err) {
+        console.log(err);
       }
     },
   },
-  created() {
-    this.totalActividades();
+  async created() {
+    await this.totalActividades();
     this.totalEntregas();
   },
 };

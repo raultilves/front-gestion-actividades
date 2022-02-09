@@ -47,17 +47,19 @@
 </template>
 
 <script>
+import {mapState} from "vuex"
 import axios from "axios";
 
 export default {
   name: "HomeProfesor",
   data() {
     return {
-      usuario: "",
-      userId: "",
       modulos: [],
       actividades: [],
     };
+  },
+  computed: {
+    ...mapState(['username', 'userId', 'token'])
   },
   methods: {
     async stats(userId) {
@@ -69,7 +71,7 @@ export default {
           },
           {
             headers: {
-              "auth-token": localStorage.getItem("auth-token"),
+              "auth-token": this.token,
             },
           }
         );
@@ -80,12 +82,7 @@ export default {
     },
   },
   created() {
-    this.usuario = localStorage.getItem("username");
-    this.userId = localStorage.getItem("_id");
-
-    if (this.usuario) {
-      this.stats(this.userId);
-    }
+    this.stats(this.userId);
   },
 };
 </script>

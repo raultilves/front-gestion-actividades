@@ -13,9 +13,19 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/actividades',
-    name: 'Actividades',
-    component: () => import('../views/Actividades.vue')
+    path: '/actividades-alumno',
+    name: 'ActividadesAlumno',
+    component: () => import('../views/ActividadesAlumno.vue')
+  },
+  {
+    path: '/actividades-profesor',
+    name: 'ActividadesProfesor',
+    component: () => import('../views/ActividadesProfesor.vue')
+  },
+  {
+    path: '/actividad/:id',
+    name: 'Actividad',
+    component: () => import('../views/Actividad.vue')
   },
   {
     path: '/modulos',

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {mapState} from "vuex"
 // @ is an alias to /src
 import HomeAlumno from "@/components/HomeAlumno.vue"
 import HomeProfesor from "@/components/HomeProfesor.vue"
@@ -18,24 +19,19 @@ export default {
   name: "Home",
   data() {
     return {
-      rol: "",
     };
   },
   components: {
     HomeAlumno,
     HomeProfesor
   },
-  methods: {
-    
+  computed: {
+    ...mapState(['rol', 'isLogged'])
   },
   created() {
-    const usuario = localStorage.getItem("username")
-    if (usuario) {
-      this.rol = localStorage.getItem("rol");
-    } else {
-      this.$router.push('login')
+    if (!this.isLogged) {
+      this.$router.push('/login')
     }
-    
-  },
+  }
 };
 </script>

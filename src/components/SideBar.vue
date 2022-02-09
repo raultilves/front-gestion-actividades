@@ -23,7 +23,10 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/actividades" class="nav-link text-white">
+        <router-link v-if="rol == 'alumno'" to="/actividades-alumno" class="nav-link text-white">
+          Actividades
+        </router-link>
+        <router-link v-else-if="rol == 'profesor'" to="/actividades-profesor" class="nav-link text-white">
           Actividades
         </router-link>
       </li>
@@ -37,12 +40,13 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
-  name: "NavBar",
-  data() {
-    return {
-    };
-  },
+  name: "SideBar",
+  computed: {
+    ...mapState(['rol'])
+  }
 };
 </script>
 

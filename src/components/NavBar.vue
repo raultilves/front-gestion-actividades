@@ -5,7 +5,8 @@
         <router-link to="/" class="nav-link text-center active" style="width: 120px">Home</router-link>
       </li>
       <li class="nav-item border rounded-3 ms-3 bg-dark">
-        <router-link to="/actividades" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
+        <router-link v-if="rol == 'alumno'" to="/actividades-alumno" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
+        <router-link v-else-if="rol == 'profesor'" to="/actividades-profesor" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
       </li>
       <li class="nav-item border rounded-3 ms-3 bg-dark">
         <router-link to="/modulos" class="nav-link text-center active" style="width: 120px">Modulos</router-link>
@@ -18,19 +19,21 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   name: "NavBar",
   methods: {
     ...mapMutations(['logOut']),
     cerrarSesion() {
-      localStorage.clear()
-
       this.logOut()
-      this.$router.push("login");
+      
+      this.$router.push("/login");
     },
   },
+  computed: {
+    ...mapState(['rol'])
+  }
 };
 </script>
 

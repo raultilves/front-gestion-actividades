@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <p class="display-1">Todas tus actividades</p>
+        <p class="display-2">Todas tus actividades</p>
       </div>
     </div>
     <hr>

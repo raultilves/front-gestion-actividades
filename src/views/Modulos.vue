@@ -2,20 +2,22 @@
   <div>
     <div class="row">
       <div class="col">
-        <p class="display-2">Tus módulos</p>
+        <p class="display-2">Tus matrículas</p>
       </div>
     </div>
     <hr />
     <div class="row">
-      <div v-for="item in modulos" :key="item._id" class="col-4 mt-5">
+      <div v-for="item in modulos" :key="item._id" class="col-4 mt-3">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Modulo: {{ item.nombre }}</h5>
             <p class="card-text">Docente: {{ item.profesor.username.charAt(0).toUpperCase() + item.profesor.username.slice(1) }}</p>
-            <router-link :to="{ name: 'Actividad', params: { id: item._id } }"
-              class="btn btn-primary"
-              >Ver</router-link
-            >
+            <div class="d-grid gap-2">
+              <router-link :to="{ name: 'ActividadesAlumno', params: { modulo: item._id } }"
+                class="btn btn-outline-primary"
+                >Consultar sus actividades</router-link
+              >
+            </div>
           </div>
         </div>
       </div>

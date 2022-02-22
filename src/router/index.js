@@ -13,7 +13,7 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/actividades-alumno',
+    path: '/actividades-alumno/:modulo',
     name: 'ActividadesAlumno',
     component: () => import('../views/ActividadesAlumno.vue')
   },

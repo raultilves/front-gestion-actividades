@@ -25,7 +25,7 @@
               Echa un vistazo rápido a la lista de actividades propuestas en tus
               módulos. Esto mostrará tanto entregadas como pendientes.
             </p>
-            <router-link to="/actividades-alumno" class="btn btn-primary">Ver más</router-link>
+            <router-link to="/actividades-alumno/all" class="btn btn-primary">Ver más</router-link>
           </div>
         </div>
       </div>

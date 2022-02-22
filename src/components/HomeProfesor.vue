@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <p class="display-1">Bienvenido {{ usuario }}</p>
+      <p class="display-1">Bienvenido {{ username }}</p>
 
       <p>Actualmente eres docente de {{ modulos.length }} modulo(s)</p>
     </div>

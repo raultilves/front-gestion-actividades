@@ -23,7 +23,7 @@
         </router-link>
       </li>
       <li>
-        <router-link v-if="rol == 'alumno'" to="/actividades-alumno" class="nav-link text-white">
+        <router-link v-if="rol == 'alumno'" to="/actividades-alumno/all" class="nav-link text-white">
           Actividades
         </router-link>
         <router-link v-else-if="rol == 'profesor'" to="/actividades-profesor" class="nav-link text-white">

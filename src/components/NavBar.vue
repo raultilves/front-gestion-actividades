@@ -5,7 +5,7 @@
         <router-link to="/" class="nav-link text-center active" style="width: 120px">Home</router-link>
       </li>
       <li class="nav-item border rounded-3 ms-3 bg-dark">
-        <router-link v-if="rol == 'alumno'" to="/actividades-alumno" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
+        <router-link v-if="rol == 'alumno'" to="/actividades-alumno/all" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
         <router-link v-else-if="rol == 'profesor'" to="/actividades-profesor" class="nav-link text-center active" style="width: 120px">Actividades</router-link>
       </li>
       <li class="nav-item border rounded-3 ms-3 bg-dark">

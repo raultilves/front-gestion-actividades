@@ -72,14 +72,41 @@ export default {
               this.actividades.push(actividad)
             })
         });
-        console.log(this.actividades)
       } catch (err) {
         console.log(err);
       }
     },
+    async actividadesByModulo(query) {
+      try {
+        const actividades = await axios.post(
+          `http://localhost:3000/api/actividades/find/`,
+          {
+            modulo_id: query,
+          },
+          {
+            headers: {
+              "auth-token": this.token
+            }
+          },
+        )
+
+        actividades.data.forEach(actividad => {
+          this.actividades.push(actividad)
+        })
+
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
   async created() {
-    await this.totalActividades();
+    if (this.$route.params.modulo == "all") {
+      await this.totalActividades();
+    } else {
+      await this.actividadesByModulo(this.$route.params.modulo);
+    }
+    
+    
   },
 };
 </script>

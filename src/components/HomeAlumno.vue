@@ -49,7 +49,7 @@
               Pulsa aquí para ver todas tus actividades pendientes. Podrás
               filtrarlas por módulo y marcarlas como realizadas.
             </p>
-            <a href="#" class="btn btn-primary">Ver más</a>
+            <router-link to="/actividades-pendientes/all" class="btn btn-primary">Ver más</router-link>
           </div>
         </div>
       </div>
@@ -109,9 +109,9 @@ export default {
               }
             )
             
-            actividades.data.forEach(actividad => {
-              this.actividades.push(actividad)
-            })
+          actividades.data.forEach(actividad => {
+             this.actividades.push(actividad)
+          })
         });
         console.log(this.modulos)
       } catch (err) {

@@ -28,6 +28,11 @@ const routes = [
     component: () => import('../views/Actividad.vue')
   },
   {
+    path: '/actividades-pendientes/:modulo',
+    name: 'ActividadesPendientes',
+    component: () => import('../views/ActividadesPendientes')
+  },
+  {
     path: '/modulos',
     name: 'Modulos',
     component: () => import('../views/Modulos.vue')

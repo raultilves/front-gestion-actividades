@@ -7,7 +7,8 @@
     </div>
     <div class="row">
       <select class="form-select" @change="filterHandler">
-        <option value="all">Todos los módulos</option>
+        <option selected>- Filtrar por módulo -</option>
+        <option value="all">Todos</option>
         <option v-for="modulo in modulos" :key="modulo._id" :value="modulo._id">
           {{ modulo.nombre }}
         </option>
@@ -59,6 +60,7 @@ export default {
     async queryPendientes(query) {
       console.log(query);
       this.actividades = []
+      this.modulos = []
       try {
         if (query == "all") {
           const matriculas = await axios.get(
@@ -112,6 +114,26 @@ export default {
             });
           });
         } else {
+          const matriculas = await axios.get(
+            `http://localhost:3000/api/matriculas/byalumno/${this.userId}`,
+            {
+              headers: {
+                "auth-token": this.token,
+              },
+            }
+          );
+
+          matriculas.data.forEach(async (matricula) => {
+            const modulo = await axios.get(
+              `http://localhost:3000/api/modulos/${matricula.modulo_id}`,
+                {
+                  headers: {
+                    "auth-token": this.token,
+                  },
+                }
+            );
+            this.modulos.push(modulo.data);
+          })
           const modulo = await axios.get(
             `http://localhost:3000/api/modulos/${query}`,
             {
@@ -120,7 +142,6 @@ export default {
               },
             }
           );
-          this.modulos.push(modulo.data);
 
           const actividades = await axios.post(
             "http://localhost:3000/api/actividades/find",

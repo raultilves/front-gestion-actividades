@@ -1,7 +1,7 @@
 <template>
   <div
     class="d-flex flex-column flex-shrink-0 px-3 pt-2 m-0 text-white bg-dark"
-    style="height: 960px"
+    style="height: 2000px"
     >
     <a
       href="/"

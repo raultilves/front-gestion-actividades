@@ -5,6 +5,11 @@
         <p class="display-2">Todas tus actividades</p>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <router-link :to="{name: 'ActividadesPendientes', params: {modulo: 'all'}}" class="btn btn-primary">Ver solo las pendientes</router-link>
+      </div>
+    </div>
     <hr>
     <div class="row">
       <div v-for="item in actividades" :key="item._id" class="col-4 mt-5">

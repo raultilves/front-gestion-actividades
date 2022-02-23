@@ -6,13 +6,18 @@
       </div>
     </div>
     <div class="row">
-      <select class="form-select" @change="filterHandler">
-        <option selected>- Filtrar por módulo -</option>
-        <option value="all">Todos</option>
-        <option v-for="modulo in modulos" :key="modulo._id" :value="modulo._id">
-          {{ modulo.nombre }}
-        </option>
-      </select>
+      <div class="col-10">
+        <select class="form-select" @change="filterHandler">
+          <option selected>- Filtrar por módulo -</option>
+          <option value="all">Todos</option>
+          <option v-for="modulo in modulos" :key="modulo._id" :value="modulo._id">
+            {{ modulo.nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="col">
+        <router-link :to="{name: 'ActividadesAlumno', params: {modulo: 'all'}}" class="btn btn-primary">Ver las entregadas también</router-link>
+      </div>
     </div>
     <hr />
     <div class="row">

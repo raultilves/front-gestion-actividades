@@ -9,7 +9,7 @@
 
       <button v-if="!entregada" @click="entregar" class="btn btn-success">Marcar como entregada</button>
       <button v-if="entregada" @click="desentregar" class="btn btn-danger">Marcar como no entregada</button>
-      <router-link to="/actividades-alumno" class="btn btn-primary position-absolute end-0 me-3">Volver</router-link>
+      <router-link to="/actividades-alumno/all" class="btn btn-primary position-absolute end-0 me-3">Volver</router-link>
     </div>
   </div>
 </template>
